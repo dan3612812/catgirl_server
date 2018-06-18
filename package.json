@@ -1,0 +1,25 @@
+{
+  "name": "catgirl_server",
+  "version": "1.0.0",
+  "description": "is homework",
+  "main": "\u001b[D\u001b[Cserver.js",
+  "scripts": {
+    "test": "node src/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dan3612812/catgirl_server.git"
+  },
+  "author": "dan3612812",
+  "license": "ISC",
+  "dependencies": {
+    "express":"^4.16.3",
+    "request":"^2.87.0",
+    "sequelize": "^4.37.10",
+    "mqtt":"^2.18.1"
+  },
+  "bugs": {
+    "url": "https://github.com/dan3612812/catgirl_server/issues"
+  },
+  "homepage": "https://github.com/dan3612812/catgirl_server#readme"
+}
