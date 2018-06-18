@@ -3,6 +3,8 @@ first  npm install
 second npm test
 
 ------post------
+=========
+
 127.0.0.1:9487/createroom
     在 body內塞入json
     {
@@ -35,7 +37,7 @@ second npm test
     'p1status': 0,      //玩家1的狀態 |0:待機 1:準備中,2:開始,3:斷線,4:戰鬥中
     'p2status': 0       //玩家2的狀態 |0:待機 1:準備中,2:開始,3:斷線,4:戰鬥中
  }
- 
+
  ------MQTT--------
  mqtt message format
     json
@@ -47,6 +49,7 @@ second npm test
     }
 
 收到client封包時
+
     當 status:"1"時 server將更改使用者的狀態為"1" 
         -當雙方的status都為"1"時server將傳送 "command":"start" 代表開始遊戲
 
