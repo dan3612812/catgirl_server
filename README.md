@@ -5,7 +5,7 @@ how to use?
 ------post------
 =========
 
-127.0.0.1:9487/createroom
+`127.0.0.1:9487/createroom`
     在 body內塞入json
     
     {
