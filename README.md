@@ -6,15 +6,15 @@ how to use?
 =========
 
 `127.0.0.1:9487/createroom`
-    在 body內塞入json
+在 body內塞入json
     
     {
         "id":"id"     //android_id
     }
     
 ----
-127.0.0.1:9487/joinroom
-    在 body內塞入json
+`127.0.0.1:9487/joinroom`
+在 body內塞入json
     
     {
         "roomid":"<android_id>",     //房主的android_id
@@ -22,8 +22,8 @@ how to use?
     }
     
 ----
-127.0.0.1:9487/mqttpub
-    在 body內塞入json
+`127.0.0.1:9487/mqttpub`
+在 body內塞入json
 
     {
         "topic":'catgirl/room/'+<android_id>,     //房主的mqtt topic 預設 catgirl/room/android_id
@@ -44,10 +44,10 @@ how to use?
     }
 
 
- ------MQTT--------
- =========
- mqtt message format
-    json
+------MQTT--------
+=========
+mqtt message format
+json
 
     {
         'id':"<android_id>",  //發送端的 andorid_id
