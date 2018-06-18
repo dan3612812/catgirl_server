@@ -29,6 +29,7 @@ second npm test
 
 
 ------server----
+=========
 房間 json 格式
 { 'roomname': 'test',   //房名 用android id
     'player1': 'p1',    //創房名的 andorid id 同上
@@ -39,6 +40,7 @@ second npm test
  }
 
  ------MQTT--------
+ =========
  mqtt message format
     json
     {
