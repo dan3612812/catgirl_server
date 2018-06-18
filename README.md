@@ -30,7 +30,7 @@ how to use?
         "message":msg      //自己的android id
     }
 
-------server----
+------server--------
 =========
 房間 json 格式
 
