@@ -7,18 +7,20 @@ second npm test
 
 127.0.0.1:9487/createroom
     在 body內塞入json
+    ```
     {
         "id":"id"     //android_id
     }
-
+    ```
 ----
 127.0.0.1:9487/joinroom
     在 body內塞入json
+    ```
     {
         "roomid":"<android_id>",     //房主的android_id
         "id":"<androdi_id>"      //自己的android_id
     }
-
+    ```
 ----
 127.0.0.1:9487/mqttpub
     在 body內塞入json
