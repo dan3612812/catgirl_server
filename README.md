@@ -1,6 +1,6 @@
 how to use?
-first  npm install
-second npm test
+1.  npm install
+2. npm test
 
 ------post------
 =========
@@ -48,7 +48,7 @@ second npm test
  =========
  mqtt message format
     json
-    
+
     {
         'id':"<android_id>",  //發送端的 andorid_id
         'status':"0",       // |0:待機 1:準備中,2:開始,3:斷線,4:戰鬥中
