@@ -1,17 +1,26 @@
+Introduce
+====
+This project use mqtt communication server & clinet(APP).
+Clinet to judgment and process.Server also listen messages
+and receive specific message todo something and publish message to this topic.
+
 how to start server?
 1. command `npm install`
 2. command `npm test`
 
-###you can see this log
+if your server start success you can see this log
+
+    The server started in 127.0.0.1:9487
+    ---------------------------------------
 
 
-The server started in 127.0.0.1:9487
-\---------------------------------------
+`注意事項`
 
-
-#文章內<android_id>透過get/url/uid 取得
-#如未修改mqtt url 請在本機端安裝mqtt並啟用
-
+1. 文章內<android_id>透過get/url/uid 取得
+2. 如未修改mqtt url 請在本機端安裝mqtt並啟用(src/mqtt.js:2)
+3. 當然你的電腦需要安裝`Node.js`
+4. This author is Taiwanese so english is poor 
+5. app is here `https://github.com/love1314524/BeadGame/` is by my friends 
 ------get-------
 ====
 
