@@ -4,12 +4,12 @@ how to start server?
 
 ###you can see this log
 
-\    The server started in 127.0.0.1:9487
-\    ---------------------------------------
+
+The server started in 127.0.0.1:9487
+\---------------------------------------
 
 
 #文章內<android_id>透過get/url/uid 取得
-***
 #如未修改mqtt url 請在本機端安裝mqtt並啟用
 
 ------get-------
