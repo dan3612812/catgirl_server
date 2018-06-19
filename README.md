@@ -1,10 +1,11 @@
 how to start server?
 1. command `npm install`
 2. command `npm test`
+
 ###you can see this log
 
     The server started in 127.0.0.1:9487
-    ---------------------------------------
+    \---------------------------------------
 
 
 #文章內<android_id>透過get/url/uid 取得
@@ -14,7 +15,7 @@ how to start server?
 ====
 
 `127.0.0.1:9487/uid`
-回傳值
+#回傳值
 
     {
         "id":"android_id"   //取得android_id
@@ -22,6 +23,7 @@ how to start server?
 
 ----
 `127.0.0.1:9487/roomlist`
+#回傳值
 
     [
         {
@@ -39,7 +41,7 @@ how to start server?
 =========
 
 `127.0.0.1:9487/createroom`
-在 body內塞入json
+#在body內塞入json
     
     {
         "id":"id"     //android_id
@@ -47,7 +49,7 @@ how to start server?
     
 ----
 `127.0.0.1:9487/joinroom`
-在 body內塞入json
+#在body內塞入json
     
     {
         "roomid":"android_id",      //房主的android_id
@@ -56,7 +58,7 @@ how to start server?
     
 ----
 `127.0.0.1:9487/mqttpub`
-在 body內塞入json
+#在body內塞入json
 
     {
         "topic":'catgirl/room/'+<android_id>,     //房主的mqtt topic 預設 catgirl/room/android_id
@@ -86,7 +88,7 @@ how to start server?
 ------MQTT--------
 =========
 mqtt message format
-json
+#json
 
     {
         'id':"<android_id>",  //發送端的 andorid_id
