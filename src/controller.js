@@ -1,10 +1,12 @@
 
-var request = require("request"); // 訪問request
-var Sequelize = require('sequelize'); //多功能資料庫查詢
+//var request = require("request"); // 訪問request
+//var Sequelize = require('sequelize'); //多功能資料庫查詢
 var mqtt = require('./mqtt.js');
+var crypto = require("crypto");
 var rl = ['test1', 'test2'];
 var rlc = [0, 0];
 exports.rinfo = [{ 'roomname': 'test', 'player1': 'p1', 'player2': 'p2', 'playcou': 0, 'p1status': 0, 'p2status': 0 }]
+
 
 
 // client request room list 
@@ -47,6 +49,12 @@ exports.joinroom = function (req, res) {
     // } else {
     //     res.send('full');
     // }
+}
+
+//產生 id 
+exports.uid = function (req,res) {
+    var temp = { "id": crypto.randomBytes(6).toString('hex') }
+    res.send(temp);
 }
 
 // test server survival
