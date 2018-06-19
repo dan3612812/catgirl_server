@@ -1,17 +1,25 @@
 
 //var request = require("request"); // 訪問request
 //var Sequelize = require('sequelize'); //多功能資料庫查詢
+var rinfo = [{ 'roomname': 'p1', 'player1': 'p1', 'player2': 'p2', 'playcou': 0, 'p1status': 4, 'p2status': 4 }, { 'roomname': 'p1', 'player1': 'p1', 'player2': 'p2', 'playcou': 0, 'p1status': 3, 'p2status': 3 }];
+exports.rinfo = rinfo;
 var mqtt = require('./mqtt.js');
 var crypto = require("crypto");
 
-var rlc = [0, 0];
-exports.rinfo = [{ 'roomname': 'test', 'player1': 'p1', 'player2': 'p2', 'playcou': 0, 'p1status': 0, 'p2status': 0 }]
-
-
+// 更改內容 obj
+exports.chrinfo = function (roomcou, obj) {
+    rinfo[roomcou] = obj;
+}
+// 更改單一格值
+exports.chrinfo = function (roomcou, key, value) {
+    rinfo[roomcou][key] = value;
+    // console.log("更改單一直 被叫到了");
+    // console.log("key:" + key + " value:" + value);
+}
 
 // client request room list 
 exports.roomlist = function (req, res) {
-    res.send(exports.rinfo);
+    res.send(rinfo);
 }
 
 //clinet request create room and treat id  as topic
@@ -43,16 +51,10 @@ exports.joinroom = function (req, res) {
             res.send('full');
         }
     }
-    // if (rlc[roomcou] < 2) {
-    //     rlc[roomcou]++;
-    //     res.send('success');
-    // } else {
-    //     res.send('full');
-    // }
 }
 
 //產生 id 
-exports.uid = function (req,res) {
+exports.uid = function (req, res) {
     var temp = { "id": crypto.randomBytes(6).toString('hex') }
     res.send(temp);
 }
