@@ -47,9 +47,6 @@ client.on('message', function (topic, message) {
     //收到取消訊息 改變狀態
     if (mstatus == 0) {
         //取消 要看對方是否 非開始  才能取消準備
-        // console.log("into mstatus 0");
-        // console.log("rinfo[roomcou].player1:" + rinfo[roomcou].player1);
-        // console.log("rinfo[roomcou].p2status:" + rinfo[roomcou].p2status);  cont.chrinfo(0, "player1", "123");
         if (rinfo[roomcou].player1 == mid && rinfo[roomcou].p2status != "2") { rinfo[roomcou].p1status = 0 };
         if (rinfo[roomcou].player2 == mid && rinfo[roomcou].p1status != "2") { rinfo[roomcou].p2status = 0 };
     }

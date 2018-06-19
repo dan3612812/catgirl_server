@@ -60,6 +60,12 @@ how to use?
         'p2status': 0       //玩家2的狀態 |0:待機 1:準備中,2:開始,3:斷線,4:戰鬥中,5:結束
     }
 
+注意事項
+
+1. 需先exports.rinfo 才能呼叫`mqtt.js` 否則`mqtt.js`裡的rinfo 會無資料
+2. 在`mqtt.js` 直接改變rinfo 是指標在 `controller.js` 的rinfo 同一空間
+3. 7=='7' ture
+4. roomname將採用創立房間的id 將與player1的值一樣
 
 ------MQTT--------
 =========
@@ -73,11 +79,16 @@ json
         ...             //由clinet 自行串接下去
     }
 
-收到client封包時
+----
 
-    當 status:"1"時 server將更改使用者的狀態為"1" 
-        -當雙方的status都為"1"時server將傳送 "command":"start" 代表開始遊戲
+client封包status意思
 
-    當 status:"0"時 取消準備 此時另一個玩家的status不能為"2" 
+    當`status:1`時 server將更改使用者的狀態為1當雙方的status都為"1"時server將傳送 "command":"start" 代表開始遊戲
 
-    當 status:"4"時 server將轉傳該訊息並在該json插入"command":"echo" 而被插入過的不在轉傳
+    當`status:0`時 取消準備 此時另一個玩家的status不能為2
+
+    當`status:4`時 server將轉傳該訊息並在該json插入"command":"echo" 而被插入過的不在轉傳
+
+    當`status:5`時 server將從rinfo移除該topic同名的roomname並發送訊息在同一個topic `"command":"end"`
+
+    當`status>6`或非以上數字時為server內部測試用
