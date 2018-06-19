@@ -1,5 +1,5 @@
 var mqtt = require('mqtt');
-var client = mqtt.connect('mqtt://47.74.20.158:1883');
+var client = mqtt.connect('mqtt://127.0.0.1:1883');
 var cont = require('./controller');
 var rinfo = cont.rinfo; //讀取 controller.rinfo 變數
 

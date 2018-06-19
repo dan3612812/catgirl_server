@@ -1,6 +1,14 @@
-how to use?
-1.  npm install
-2. npm test
+how to start server?
+1. command `npm install`
+2. command `npm test`
+###you can see this log
+
+    The server started in 127.0.0.1:9487
+    ---------------------------------------
+
+
+#文章內<android_id>透過get/url/uid 取得
+#如未修改mqtt url 請在本機端安裝mqtt並啟用
 
 ------get-------
 ====
@@ -9,7 +17,7 @@ how to use?
 回傳值
 
     {
-        "id":<android_id> //取得android_id
+        "id":"android_id"   //取得android_id
     }
 
 ----
@@ -17,14 +25,14 @@ how to use?
 
     [
         {
-            "roomname":"p1",    //遊戲名稱與 `player1` 相同
-            "player1":"p1",     //player1的<android_id>
-            "player2":"p2",     //player2的<android_id>
+            "roomname":"p1",    //遊戲名稱與 player1 相同
+            "player1":"p1",     //player1的 android_id
+            "player2":"p2",     //player2的 android_id
             "playcou":0,        //該房間人數
             "p1status":4,       //player1的狀態|0:待機 1:準備中,2:開始,3:斷線,4:戰鬥中,5:結束
             "p2status":4        //player2的狀態|0:待機 1:準備中,2:開始,3:斷線,4:戰鬥中,5:結束
         },
-        {object}...            //可再新增同上物件
+        {object}...             //可再新增同上物件
     ]
 
 ------post------
@@ -42,8 +50,8 @@ how to use?
 在 body內塞入json
     
     {
-        "roomid":"<android_id>",     //房主的android_id
-        "id":"<androdi_id>"      //自己的android_id
+        "roomid":"android_id",      //房主的android_id
+        "id":"androdi_id"           //自己的android_id
     }
     
 ----
