@@ -1,10 +1,11 @@
-Introduce
+<center>Introduce</center>
 ====
 This project use mqtt communication server & clinet(APP).
 Clinet to judgment and process.Server also listen messages
 and receive specific message todo something and publish message to this topic.
+----
 
-how to start server?
+How to start server?
 1. command `npm install`
 2. command `npm test`
 
