@@ -23,7 +23,7 @@ if your server start success you can see this log
 2. 如未修改mqtt url 請在本機端安裝mqtt並啟用(src/mqtt.js:2)
 3. 當然你的電腦需要安裝`Node.js`
 4. This author is Taiwanese so english is poor 
-5. app is here `https://github.com/love1314524/BeadGame/` is by my friends 
+5. app is here (https://github.com/love1314524/BeadGame/) is by my friends 
 ------get-------
 ====
 
