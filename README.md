@@ -8,9 +8,9 @@ how to use?
 `127.0.0.1:9487/uid`
 回傳值
 
-{
-    "id":<android_id> //取得android_id
-}
+    {
+        "id":<android_id> //取得android_id
+    }
 
 
 
