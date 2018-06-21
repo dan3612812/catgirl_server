@@ -19,11 +19,11 @@ if your server start success you can see this log
 
 `注意事項`
 
-    1. 文章內<android_id>透過get/url/uid 取得
-    2. 如未修改mqtt url 請在本機端安裝mqtt並啟用(src/mqtt.js:2)
-    3. 當然你的電腦需要安裝`Node.js`
-    4. This author is Taiwanese so english is poor 
-    5. app is here https://github.com/love1314524/BeadGame/ is by my friends 
+1. 文章內<android_id>透過get/url/uid 取得
+2. 如未修改mqtt url 請在本機端安裝mqtt並啟用(src/mqtt.js:2)
+3. 當然你的電腦需要安裝`Node.js`
+4. This author is Taiwanese so english is poor 
+5. app is here https://github.com/love1314524/BeadGame/ is by my friends 
 
 
 
@@ -31,11 +31,13 @@ if your server start success you can see this log
 ------get-------
 ====
 `127.0.0.1:9487/test`   //測試系統是否存活
+
 #回傳值
 
     hello server is survival
 
 `127.0.0.1:9487/uid`    //取得android_id
+
 #回傳值
 
     {
@@ -44,6 +46,7 @@ if your server start success you can see this log
 
 ----
 `127.0.0.1:9487/roomlist`   //取得房間列表
+
 #回傳值
 
     [
@@ -63,8 +66,8 @@ if your server start success you can see this log
 
 `注意事項`
 
-    1. 底下post方式 請 header 加上 Content-Type ,Json
-    2. 請在body內塞入Json
+1. 底下post方式 請 header 加上 Content-Type ,Json
+2. 請在body內塞入Json
 
 `127.0.0.1:9487/createroom`     //創建房間
     
@@ -115,17 +118,18 @@ if your server start success you can see this log
 
 `注意事項`
 
-    1. 需先exports.rinfo 才能呼叫`mqtt.js` 否則`mqtt.js`裡的rinfo 會無資料
-    2. 在`mqtt.js` 直接改變rinfo 請呼叫在`controller.js`的`chrinfo`支援兩種呼叫詳情請看下方6. 7.
-    3. 7=='7' ture
-    4. roomname將採用創立房間的id 將與player1的值一樣
-    5. 如有mqtt訊息`"command"`的值有問題請參考下面 mqtt - server封包command指令
-    6. chrinfo(room_serial,object) 修改rinfo[room_serial]的物件
-    7. chrinfo(room_serial,key,value) 修改rinfo[room_serial].key=value 單一格值
+1. 需先exports.rinfo 才能呼叫`mqtt.js` 否則`mqtt.js`裡的rinfo 會無資料
+2. 在`mqtt.js` 直接改變rinfo 請呼叫在`controller.js`的`chrinfo`支援兩種呼叫詳情請看下方6. 7.
+3. 7=='7' ture
+4. roomname將採用創立房間的id 將與player1的值一樣
+5. 如有mqtt訊息`"command"`的值有問題請參考下面 mqtt - server封包command指令
+6. chrinfo(room_serial,object) 修改rinfo[room_serial]的物件
+7. chrinfo(room_serial,key,value) 修改rinfo[room_serial].key=value 單一格值
 
 ------MQTT--------
 =========
 mqtt message format
+
 #json
 
     {
