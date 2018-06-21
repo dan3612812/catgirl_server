@@ -17,7 +17,8 @@
     "request": "^2.87.0",
     "sequelize": "^4.37.10",
     "mqtt": "^2.18.1",
-    "crypto": "^1.0.1"
+    "crypto": "1.0.1",
+    "async": "2.6.1"
   },
   "bugs": {
     "url": "https://github.com/dan3612812/catgirl_server/issues"

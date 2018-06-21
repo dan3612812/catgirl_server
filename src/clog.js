@@ -1,3 +1,6 @@
+//flags 來源檔案名稱 或者自定義
+//msg 預印出訊息
+//tag 其他標記或分類
 
 exports.log = function (flags, msg, tag) {
     if (flags == "controller") {

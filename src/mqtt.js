@@ -55,7 +55,6 @@ client.on('message', function (topic, message) {
         }
     }
 
-
     //收到取消訊息 改變狀態
     if (mstatus == 0) {
         //取消 要看對方是否 非開始  才能取消準備
@@ -79,7 +78,7 @@ client.on('message', function (topic, message) {
         }
     }
 
-    //遊戲結束 刪除房間
+    //遊戲結束 
     if (mstatus == 5) {
         //發送 mqtt end 訊號
         var temp = {
@@ -154,7 +153,7 @@ exports.addsubcribe = function (room) {
 
 
 
-
+//使用 mqtt 達成 post 功能
 //----------not use-----------//
 //推訊息
 exports.mqttpub = function (topic, message) {
