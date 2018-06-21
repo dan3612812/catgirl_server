@@ -33,13 +33,11 @@ if your server start success you can see this log
 `127.0.0.1:9487/test`   //測試系統是否存活
 
 #回傳值
-
     hello server is survival
 
 `127.0.0.1:9487/uid`    //取得android_id
 
 #回傳值
-
     {
         "id":"<android_id>"   //取得android_id
     }
@@ -48,7 +46,6 @@ if your server start success you can see this log
 `127.0.0.1:9487/roomlist`   //取得房間列表
 
 #回傳值
-
     [
         {
             "roomname":"p1",    //遊戲名稱與 player1 相同
