@@ -1,5 +1,5 @@
 var mqtt = require('mqtt');
-var client = mqtt.connect('mqtt://127.0.0.1:1883');
+var client = mqtt.connect('mqtt://192.168.2.28:1883');
 var cont = require('./controller');
 var clog = require('./clog');
 var tfn = "mqtt";
@@ -35,14 +35,13 @@ client.on('message', async function (topic, message) {
         if (mstatus == undefined) { //錯誤格式
             clog.log(tfn, "4", 4);
         } else {                      //clinet msg
-            console.log("roomcou:" + roomcou);
             tmsg = "room_serial:" + (roomcou == -1 ? "ERROR" : roomcou);
             tmsg += "\ntopic:" + mtopic + "\nid:" + mid + "\nstatus:" + mstatus;
             //tmsg += "\n" + JSON.stringify(msg);
             clog.log(tfn, tmsg, 1);
         }
     } else {                        //server msg        
-        tmsg = "\nid:" + mid + "command:" + msg.command; + "\ntopic:" + mtopic;
+        tmsg = "\nid:" + mid + "  command:" + msg.command; + "\ntopic:" + mtopic;
         clog.log(tfn, tmsg, 0);
     }
     if (roomcou == -1) { return }
