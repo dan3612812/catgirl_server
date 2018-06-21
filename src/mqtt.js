@@ -1,11 +1,14 @@
 var mqtt = require('mqtt');
-var client = mqtt.connect('mqtt://127.0.0.1:1883');
+var client = mqtt.connect('mqtt://47.74.20.158:1883');
 var cont = require('./controller');
+var clog = require('./clog');
+var tfn = "mqtt";
 var rinfo = cont.rinfo; //讀取 controller.rinfo 變數
 
 
 client.on('connect', function () {
     client.subscribe('catgirl_room');
+    client.subscribe('catgirl/room/p1');
 });
 
 // ////////test //////////
@@ -17,23 +20,31 @@ client.on('message', function (topic, message) {
 
     //---- 監聽 mqtt room ----//
     var msg = JSON.parse(message);
-    var mstatus = msg.status; //0:待機 1:準備中 2:開始 3:斷線 4:戰鬥中 5:結束
+    var mstatus = msg.status; //0:待機 1:準備中 2:開始 3:斷線 4:戰鬥中 5:結束 
     var mid = msg.id;
-    var roomcou = rinfo.findIndex(x => x.roomname === mid);// find room index
-    if (msg.command == undefined) {
-        console.log("--clinet msg--");console.log("roomcount: " + roomcou);
-    } else {
-        console.log("----server msg----"); console.log("command: " + msg.command);
+    var mtopic = topic.split("/").pop();
+    var roomcou = rinfo.findIndex(x => x.roomname === mtopic);// find room index
+
+    var tmsg = "";
+    if (msg.command == undefined) { //clinet msg
+        tmsg = "room_serial:" + roomcou;
+        tmsg += "\ntopic:" + mtopic + "\nid:" + mid + "\nstatus:" + mstatus;
+        tmsg += "\n" + JSON.stringify(msg);
+        clog.log(tfn, tmsg, 1);
+    } else {                        //server msg        
+        tmsg = "\nid:" + mid + "command:" + msg.command; + "\ntopic:" + mtopic;
+        clog.log(tfn, tmsg, 0);
     }
-    console.log("topic: " + topic + " message :" + message.toString());
-    console.log("mstatus :" + mstatus); console.log("id:" + mid);
-   
-    console.log("--------------------");
+
     //收到兩個start 的 topic 才發送 startgame
     //收到client的訊息 就幫他傳送一次訊息
     if (mstatus == 1) {
-        if (rinfo[roomcou].player1 == mid) { rinfo[roomcou].p1status == "1" };
-        if (rinfo[roomcou].player2 == mid) { rinfo[roomcou].p2status == "1" };
+        if (rinfo[roomcou].player1 == mid) {
+            cont.chrinfo(roomcou, "p1status", "1");
+        };
+        if (rinfo[roomcou].player2 == mid) {
+            cont.chrinfo(roomcou, "p2status", "1");
+        };
         //雙方都準備好 由server 發訊息 開始
         if (rinfo[roomcou].p1status == "1" && rinfo[roomcou].p2status == "1") {
             var temp = {
@@ -44,6 +55,7 @@ client.on('message', function (topic, message) {
         }
     }
 
+
     //收到取消訊息 改變狀態
     if (mstatus == 0) {
         //取消 要看對方是否 非開始  才能取消準備
@@ -51,15 +63,22 @@ client.on('message', function (topic, message) {
         if (rinfo[roomcou].player2 == mid && rinfo[roomcou].p1status != "2") { rinfo[roomcou].p2status = 0 };
     }
 
-    //戰鬥中 echo
-    if (mstatus == 4) {
-        console.log("mstatus=4:" + rinfo[roomcou].player1);
-        if (msg.command == undefined) { //確認不是server傳的 
-            var newcom = "command"; var newval = "echo";
-            msg[newcom] = newval;
-            client.publish(topic, JSON.stringify(msg), { qos: 2 });
+    //房主離開 刪除房間
+    if (mstatus == 3) {
+        if (roomcou > -1) {
+            if (rinfo[roomcou].roomname == mtopic && mtopic == mid) {
+                clog.log(tfn, "del room roomname:" + rinfo[roomcou].roomname + "\n this room is exist", 2);
+                rinfo.splice(roomcou, 1);
+                // 通知 clinet
+                var temp = {
+                    "id": "server",
+                    "command": "leave"
+                }
+                client.publish(topic, JSON.stringify(temp), { qos: 2 });
+            }
         }
     }
+
     //遊戲結束 刪除房間
     if (mstatus == 5) {
         //發送 mqtt end 訊號
@@ -69,11 +88,24 @@ client.on('message', function (topic, message) {
         }
         client.publish(topic, JSON.stringify(temp), { qos: 2 });
         //刪除陣列資料
-        if (roomcou > -1) { rinfo.splice(roomcou, 1) };
+        //   if (roomcou > -1) { clog.log(tfn, "this room game over del room", 2); rinfo.splice(roomcou, 1) };
 
     }
 
-    //----------------------test-------------------//
+
+    //戰鬥中 echo
+    /*
+    if (mstatus == 4) {
+        if (msg.command == undefined) { //確認不是server傳的 
+            var newcom = "command"; var newval = "echo";
+            msg[newcom] = newval;
+            client.publish(topic, JSON.stringify(msg), { qos: 2 });
+        }
+    }
+    */
+
+
+    //-----------------this client.on test-------------------//
     //test  change controller.js rinfo variable
     if (mstatus == "8") {
         rinfo[0].player2 = "asdfasdf";
@@ -83,21 +115,30 @@ client.on('message', function (topic, message) {
         // 7 =='7' is ture
         console.log("this is 7 =='7'");
     }
-    if (mstatus == "00") {
+    if (mstatus == "33") {
         var temp = { "": "" };
         cont.chrinfo(0, temp);
         console.log(rinfo[0]);// 會等上面做完 才console.log
     }
-    if (mstatus == "000") {
+    if (mstatus == "22") {
         cont.chrinfo(0, "player1", "123");
-        console.log("this 000");
+        console.log("this 22");
     }
     //check  var
     if (mstatus == "11") {
         console.log(" check p1status:" + rinfo[0].p1status);
     }
-    //----------------------to test end----------------//
+    //----------------this client.on to test end----------------//
 });
+//告知該topic 有人加入房間
+exports.jroom = function (topic, twoid) {
+    var temp = {
+        "id": "server",
+        "command": "join",
+        "player": twoid
+    }
+    client.publish('catgirl/room/' + topic, JSON.stringify(temp), { pos: 2 });
+}
 
 // 新訂閱房間
 exports.addsubcribe = function (room) {
