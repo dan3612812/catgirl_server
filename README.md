@@ -113,7 +113,8 @@ if your server start success you can see this log
         'player2': 'p2',    //第二個加入的玩家  
         'playcou': 0,       //用戶數  當創建好房間時 已加1
         'p1status': 0,      //玩家1的狀態 |0:待機 1:準備中,2:開始,3:斷線,4:戰鬥中,5:結束
-        'p2status': 0       //玩家2的狀態 |0:待機 1:準備中,2:開始,3:斷線,4:戰鬥中,5:結束
+        'p2status': 0,       //玩家2的狀態 |0:待機 1:準備中,2:開始,3:斷線,4:戰鬥中,5:結束
+        'time':<YYYY-MM-DD HH:mm:ss> //上次回應時間
     }
 
 `注意事項`
@@ -143,9 +144,9 @@ mqtt message format
 
 client封包status意思
 
-當`status=1`時 `使用者準備` server將更改使用者的狀態為1當雙方的status都為"1"時server將傳送`"command":"start"`代表開始遊戲
-
 當`status=0`時 `取消準備` 此時另一個玩家的status不能為"2"
+
+當`status=1`時 `使用者準備` server將更改使用者的狀態為1當雙方的status都為"1"時server將傳送`"command":"start"`代表開始遊戲
 
 當`status=3`時 `房主離開房間` 將該房間移除並透過mqtt通知該房間已被刪除 訊息格式JSON其中包含`"command":"leave"`
 
@@ -153,7 +154,9 @@ client封包status意思
 
 當`status=5`時 `遊戲結束` server發送訊息在`同一個topic` 訊息格式JSON其中包含`"command":"end"`
 
-當`status>6`時 `系統測試` 或非數字時為server內部測試用
+當`status=6`時 `確認延遲` clinet回應`"command":"live"` 發出JSON其中包含`"id":"<android>"`,`"status":6`
+
+當`status=7`時 `clinet告知存活` 告知server該房間還有人存在
 
 ----
 
@@ -166,3 +169,4 @@ server封包command指令
 當`"command":"leave"`時 server告知該房間房主已離開房間      {qos:2}
 
 當`"command":"join"`時 server告知該房間有人進入 訊息格式JSON其中包含`"player": <android_id>`為新加入玩家的android_id       {qos:2}
+當`"command":"live"`時 server確認該房間是否存活 由房主推送JSON包含`"id":"<android>"`,`"status":7`

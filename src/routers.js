@@ -1,5 +1,5 @@
 exports.setRequestUrl = function (app) {
-    var controller = require('./controller.js');
+    var controller = require('../controller/controller.js');
 
     app.get('/test',controller.test); //server survival
     app.get('/roomlist',controller.roomlist);//get room list

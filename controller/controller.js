@@ -1,12 +1,14 @@
 
 //var request = require("request"); // 訪問request
 //var Sequelize = require('sequelize'); //多功能資料庫查詢
-var rinfo = [{ 'roomname': 'p1', 'player1': 'p1', 'player2': 'p2', 'playcou': 0, 'p1status': 4, 'p2status': 4 }, { 'roomname': 'p1', 'player1': 'p1', 'player2': 'p2', 'playcou': 0, 'p1status': 3, 'p2status': 3 }];
+var rinfo = [{ 'roomname': 'p1', 'player1': 'p1', 'player2': 'p2', 'playcou': 0, 'p1status': 0, 'p2status': 0, 'time': "2018-06-22 04:38:44" },
+{ 'roomname': 'p3', 'player1': 'p3', 'player2': 'p4', 'playcou': 0, 'p1status': 2, 'p2status': 2, "time": "2018-06-22 04:38:45" }];
 exports.rinfo = rinfo;
 var tfn = "controller";
-var mqtt = require('./mqtt.js');
-var clog = require('./clog.js');
+var mqtt = require('../src/mqtt.js');
+var clog = require('../config/clog.js');
 var crypto = require("crypto");
+var sd = require("silly-datetime");
 
 // 更改內容 obj
 exports.chrinfo = function (roomcou, obj) {
@@ -16,6 +18,12 @@ exports.chrinfo = function (roomcou, obj) {
 exports.chrinfo = function (roomcou, key, value) {
     rinfo[roomcou][key] = value;
     // console.log("key:" + key + " value:" + value);
+}
+//更新 該room_serial 的 time 值
+
+exports.renewtime = function (roomcou) {
+    var time = sd.format(new Date(), 'YYYY-MM-DD HH:mm:ss');
+    rinfo[roomcou]["time"] = time;
 }
 
 // client request room list 
@@ -36,7 +44,9 @@ exports.createroom = function (req, res) {
     } else {
         //判斷是否重複房間
         if (roomcou == -1) {
-            var temp = { 'roomname': id, 'player1': id, 'player2': '', 'playcou': 1, 'p1status': 0, 'p2status': 0 }
+            //取得時間
+            var time = sd.format(new Date(), 'YYYY-MM-DD HH:mm:ss');
+            var temp = { 'roomname': id, 'player1': id, 'player2': '', 'playcou': 1, 'p1status': 0, 'p2status': 0, 'time': time }
             rinfo.push(temp);
             //呼叫mqtt 訂閱
             tmsg += "id:" + id + "\nSUCCESS";

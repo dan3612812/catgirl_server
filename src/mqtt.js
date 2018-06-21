@@ -1,7 +1,8 @@
 var mqtt = require('mqtt');
-var client = mqtt.connect('mqtt://192.168.2.28:1883');
-var cont = require('./controller');
-var clog = require('./clog');
+var auth = require('../config/auth.js');
+var client = mqtt.connect(auth.mqtt.host);
+var cont = require('../controller/controller.js');
+var clog = require('../config/clog.js');
 var tfn = "mqtt";
 var rinfo = cont.rinfo; //讀取 controller.rinfo 變數
 
@@ -112,11 +113,11 @@ client.on('message', async function (topic, message) {
 
     //-----------------this client.on test-------------------//
     //test  change controller.js rinfo variable
-    if (mstatus == "8") {
+    if (mstatus == "88") {
         rinfo[0].player2 = "asdfasdf";
         console.log(rinfo[0]);
     }
-    if (mstatus == "7") {
+    if (mstatus == "77") {
         // 7 =='7' is ture
         console.log("this is 7 =='7'");
     }
@@ -150,10 +151,7 @@ exports.jroom = function (topic, twoid) {
 exports.addsubcribe = function (room) {
     client.subscribe('catgirl/room/' + room);
 }
-
 //client.publish('catgirl_room', 'this is server publish', { qos: 1 });
-
-
 
 
 
