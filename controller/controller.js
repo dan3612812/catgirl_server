@@ -93,6 +93,7 @@ exports.uid = function (req, res) {
 // test server survival
 exports.test = function (req, res) {
     res.send("hello server is survival");
+    console.log("is survival");
 }
 
 // mqtt publish message to topic from post
