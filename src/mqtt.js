@@ -173,7 +173,7 @@ exports.addsubcribe = function (room) {
         "command": "newroom",
         "roomname": room
     }
-    clinet.publish(opts.topic, JSON.stringify(temp), { qos: 2 });
+    client.publish(opts.topic, JSON.stringify(temp), { qos: 2 });
 }
 //client.publish('catgirl_room', 'this is server publish', { qos: 1 });
 
