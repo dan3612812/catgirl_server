@@ -3,7 +3,7 @@ module.exports = {
     'server': {
         'host': '192.168.2.2:9487',
         'name': 'test',
-        'havethis': 'fuck4'
+        'havethis': 'fuck5'
     },
     'mqtt': {
         'host': 'mqtt://192.168.2.28:1883',
