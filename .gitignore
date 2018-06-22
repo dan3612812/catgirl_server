@@ -7,7 +7,7 @@ yarn-error.log*
 
 #file
 firebase.js*
-./config/auth.js
+config/auth.js
 
 # Runtime data
 pids
