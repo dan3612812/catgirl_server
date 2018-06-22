@@ -1,8 +1,11 @@
 var mqtt = require('mqtt');
 var auth = require('../config/auth.js');
-var client = mqtt.connect(auth.mqtt.host);
+
+var opts = auth.mqtt_will;
+var client = mqtt.connect(auth.mqtt.host, { will: opts });
 var cont = require('../controller/controller.js');
 var clog = require('../config/clog.js');
+//var mslt = require('../config/auth').mqtt_will.topic; //mqtt_server_log topic 同opts.topic
 var tfn = "mqtt";
 var rinfo = cont.rinfo; //讀取 controller.rinfo 變數
 
@@ -45,6 +48,8 @@ client.on('message', async function (topic, message) {
         tmsg = "\nid:" + mid + "  command:" + msg.command; + "\ntopic:" + mtopic;
         clog.log(tfn, tmsg, 0);
     }
+
+    //無此房間 就不做事
     if (roomcou == -1) { return }
     //Judgment END---------------------------
 
@@ -97,6 +102,17 @@ client.on('message', async function (topic, message) {
         }
         client.publish(topic, JSON.stringify(temp), { qos: 2 });
     }
+    //有人無故斷線
+    if (mstatus == 8) {
+        if (mtopic == mid) { // 當發出訊息者為房主時
+            rinfo.splice(roomcou, 1);
+            var temp = {
+                "id": topic,
+                "status": 8
+            }
+            client.publish(opts.topic, JSON.stringify(temp) + "\n 意外斷線", { qos: 2 })
+        }
+    }
 
 
     //戰鬥中 echo
@@ -142,14 +158,22 @@ exports.jroom = function (topic, twoid) {
     var temp = {
         "id": "server",
         "command": "join",
-        "player": twoid
+        "player": twoid,
+        "roomname": topic
     }
     client.publish('catgirl/room/' + topic, JSON.stringify(temp), { pos: 2 });
+    client.publish(opts.topic, JSON.stringify(temp), { qos: 2 })
 }
 
 // 新訂閱房間
 exports.addsubcribe = function (room) {
     client.subscribe('catgirl/room/' + room);
+    var temp = {
+        "id": "server",
+        "command": "newroom",
+        "roomname": room
+    }
+    clinet.publish(opts.topic, JSON.stringify(temp), { qos: 2 });
 }
 //client.publish('catgirl_room', 'this is server publish', { qos: 1 });
 

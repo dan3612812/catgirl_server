@@ -19,7 +19,8 @@
     "mqtt": "^2.18.1",
     "request": "^2.87.0",
     "sequelize": "^4.37.10",
-    "silly-datetime": "^0.1.2"
+    "silly-datetime": "^0.1.2",
+    "yarm": "^0.4.0"
   },
   "bugs": {
     "url": "https://github.com/dan3612812/catgirl_server/issues"

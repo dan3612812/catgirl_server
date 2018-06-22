@@ -33,5 +33,9 @@ exports.log = function (flags, msg, tag) {
             console.log(msg);
             console.log("-------------------------");
         }
+    } else if (flags == "mqtt_log") {
+        console.log("┏----------------┓");
+        console.log(msg);
+        console.log("┗----------------┛");
     }
 }

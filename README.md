@@ -129,6 +129,14 @@ if your server start success you can see this log
 
 ------MQTT--------
 =========
+
+`注意事項`
+
+1. clinet再連線MQTT時 請定義LWT 其告知JSON格式`{"id":"<id>","sataus":"8"}`
+2. clinet請訂閱此topic :`catgirl/server_log` 已接收server相關訊息(包含server斷線參照`"command":"break"`)及新房間資訊
+3. server再連線MQTT時 已定義LWT 請參照 `'./config/auth'.mqtt_will` 檔案.物件
+
+
 mqtt message format
 
 #json
@@ -154,13 +162,17 @@ client封包status意思
 
 當`status=5`時 `遊戲結束` server發送訊息在`同一個topic` 訊息格式JSON其中包含`"command":"end"`
 
-當`status=6`時 `確認延遲` clinet回應`"command":"live"` 發出JSON其中包含`"id":"<android>"`,`"status":6`
+//未完成 當`status=6`時 `確認延遲` clinet回應`"command":"live"` 發出JSON其中包含`"id":"<android>"`,`"status":6`
 
-當`status=7`時 `clinet告知存活` 告知server該房間還有人存在
+//未完成 當`status=7`時 `clinet告知存活` 告知server該房間還有人存在
+
+當`status=8`時 為LWT 此時server將判斷是房主的話移除該房間
 
 ----
 
-server封包command指令
+server封包command指令 
+
+#在各自topic裡
 
 當`"command":"start"`時 server告知該房間開始遊戲        {qos:2}
 
@@ -169,4 +181,10 @@ server封包command指令
 當`"command":"leave"`時 server告知該房間房主已離開房間      {qos:2}
 
 當`"command":"join"`時 server告知該房間有人進入 訊息格式JSON其中包含`"player": <android_id>`為新加入玩家的android_id       {qos:2}
-當`"command":"live"`時 server確認該房間是否存活 由房主推送JSON包含`"id":"<android>"`,`"status":7`
+//未完成 當`"command":"live"`時 server確認該房間是否存活 由房主推送JSON包含`"id":"<android_id>"`,`"status":7` {qos:2}
+
+#在`'server_log'`裡
+
+當`"command":"break"` MQTT告知server斷線了 通知topic為 `catgirl/server_log`
+
+當`"command":"newroom"` server告知新房間創立 相關資訊 `"roomname":"<android_id>"`
