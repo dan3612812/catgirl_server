@@ -1,12 +1,12 @@
 module.exports = {
 
     'server': {
-        'host': '192.168.0.138:9487',
+        'host': '127.0.0.1:9487',
         'name': 'test',
         'havethis': 'fuck5'
     },
     'mqtt': {
-        'host': 'mqtt://47.74.20.158:1883',
+        'host': 'mqtt://127.0.0.1:1883',
         'name': 'raspberrypi'
     },
     'mqtt_will': {
