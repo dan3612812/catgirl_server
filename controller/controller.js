@@ -1,8 +1,11 @@
 
 //var request = require("request"); // 訪問request
 //var Sequelize = require('sequelize'); //多功能資料庫查詢
+/*
 var rinfo = [{ 'roomname': 'p1', 'player1': 'p1', 'player2': 'p2', 'playcou': 0, 'p1status': 0, 'p2status': 0, 'time': "2018-06-22 04:38:44" },
 { 'roomname': 'p3', 'player1': 'p3', 'player2': 'p4', 'playcou': 0, 'p1status': 2, 'p2status': 2, "time": "2018-06-22 04:38:45" }];
+*/
+var rinfo=[];
 exports.rinfo = rinfo;
 var tfn = "controller";
 var mqtt = require('../src/mqtt.js');

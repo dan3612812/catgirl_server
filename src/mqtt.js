@@ -27,7 +27,7 @@ client.on('message', async function (topic, message) {
         clog.log(tfn, "parse err", 3);
         return //離開
     }
-    var mstatus = msg.status; //0:待機 1:準備中 2:開始 3:斷線 4:戰鬥中 5:結束 
+    var mstatus = msg.status; //0:待機 1:準備中 2:開始 3:斷線 4:戰鬥中 5:結束  //2沒有用到 直接跳4
     var mid = msg.id;
     var mtopic = topic.split("/").pop();
     var roomcou = rinfo.findIndex(x => x.roomname === mtopic);// find room index
@@ -69,14 +69,19 @@ client.on('message', async function (topic, message) {
                 "command": "start"
             }
             client.publish(topic, JSON.stringify(temp), { qos: 2 });
+            //改變狀態
+            await cont.chrinfo(roomcou, "p1status", 4);
+            await cont.chrinfo(roomcou, "p2status", 4);
         }
     }
 
     //收到取消訊息 改變狀態
     if (mstatus == 0) {
         //取消 要看對方是否 非開始  才能取消準備
-        if (rinfo[roomcou].player1 == mid && rinfo[roomcou].p2status != "2") { rinfo[roomcou].p1status = 0 };
-        if (rinfo[roomcou].player2 == mid && rinfo[roomcou].p1status != "2") { rinfo[roomcou].p2status = 0 };
+        // await cont.chrinfo(roomcou, "p1status", 0);
+        // await cont.chrinfo(roomcou, "p2status", 0);
+        if (rinfo[roomcou].player1 == mid && rinfo[roomcou].p2status != "4") { await cont.chrinfo(roomcou, "p1status", 0) };//rinfo[roomcou].p1status = 0
+        if (rinfo[roomcou].player2 == mid && rinfo[roomcou].p1status != "4") { await cont.chrinfo(roomcou, "p2status", 0) };
     }
 
     //房主離開 刪除房間
@@ -100,11 +105,14 @@ client.on('message', async function (topic, message) {
             "id": "server",
             "command": "end"
         }
+        //將房間的遊玩者的資訊初始直
+        await cont.chrinfo(roomcou, "p1status", 0);
+        await cont.chrinfo(roomcou, "p2status", 0);
         client.publish(topic, JSON.stringify(temp), { qos: 2 });
     }
     //有人無故斷線
     if (mstatus == 8) {
-        if (mtopic == mid) { // 當發出訊息者為房主時
+        if (mtopic == mid) { // 當發出訊息者為房主時 移除該房間
             rinfo.splice(roomcou, 1);
             var temp = {
                 "id": topic,
