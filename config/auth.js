@@ -6,7 +6,7 @@ module.exports = {
         'havethis': 'fuck5'
     },
     'mqtt': {
-        'host': 'mqtt://192.168.2.2',
+        'host': 'mqtt://47.74.20.158:1883',
         'name': 'raspberrypi'
     },
     'mqtt_will': {
